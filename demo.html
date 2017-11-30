@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="one to many variable size form">
+    <meta name="keywords" content="Multiform, one to many form">
+    <meta name="author" content="Malcolm VanOrder">
+    <title>Multiform demo</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!-- build:css -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- endbuild -->
+  </head>
+
+  <body>
+    <!--[if lte IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-12">
+          <form action="" method="post">
+            <p><label for="id_recipe-name">Name:</label> <input type="text" name="recipe-name" value="" required maxlength="30" id="id_recipe-name" /></p>
+            <p><label for="id_recipe-directions">Directions:</label> <textarea name="recipe-directions" required rows="10" cols="40" id="id_recipe-directions"></textarea></p>
+            <div class="multiform">
+              <label for="id_recipe">Recipe:</label>
+	      <select name="recipe" required id="id_recipe">
+                <option value="" selected>---------</option>
+                <option value="1">Recipe object</option>
+                <option value="2">Recipe object</option>
+                <option value="3">Recipe object</option>
+                <option value="4">Recipe object</option>
+              </select>
+              <label for="id_ingredient">Ingredient:</label>
+              <select name="ingredient" required id="id_ingredient">
+                <option value="" selected>---------</option>
+                <option value="1">butter</option>
+                <option value="2">flour</option>
+                <option value="3">milk</option>
+                <option value="4">eggs</option>
+              </select>
+              <label for="id_quantity_amount">Qty:</label>
+	      <input type="text" name="quantity_amount" required maxlength="8" id="id_quantity_amount" />
+              <label for="id_quantity">Quantity:</label>
+	      <select name="quantity" id="id_quantity">
+                <option value="" selected>---------</option>
+                <option value="1">count</option>
+                <option value="2">dozen</option>
+                <option value="3">Dash</option>
+                <option value="4">Pinch</option>
+                <option value="5">Teaspoon</option>
+                <option value="6">Tablespoon</option>
+                <option value="7">Fluid ounce</option>
+                <option value="8">Cup</option>
+                <option value="9">Pint</option>
+                <option value="10">Quart</option>
+                <option value="11">Gallon</option>
+              </select>
+            </div>
+            <input type="submit" value="Save" class="btn btn-primary" />
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <!-- build:js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+
+    <script src="multiform.js"></script>
+    <script>
+      $( ".multiform").multiForm("test_prefix");
+    </script>
+
+  </body>
+</html>
