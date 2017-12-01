@@ -4,8 +4,10 @@ Multiform is a jQuery plugin for creating a one-to-many form.  It templates the 
 
 ### Requirements
 
-* jQuery - only tested on version 3.2.1 sofar, older versions will most likely work, but I'm unsure how old
-* Bootstrap - This is only for styling the buttons, you can do so otherwise, but the button classes match bootstrap v3 standards.
+* jQuery 1.4.3 or greater
+* Bootstrap - This is only for styling the buttons, you can optionally style them with custom stylesheets.  The button classes match bootstrap v3 standards.
+
+*Note:* Bootstrap complains if jQuery is below version 1.9.1, however this plugin only uses bootstrap's CSS.
 
 ### Usage
 
@@ -59,6 +61,17 @@ if no prefix is provided, then it will be prepended as follows:
 
 This structure is designed to match django's form prefix structure for easy integration into django views and forms, and should be easily adoptable into other frameworks.
 
+### Compatability
+
+The following are based off of the compatability documented on Mozilla Developer Network for methods and properties used in the code and are not tested.
+
+* Chrome: 29+
+* Edge: 20+ (EdgeHTML 12.10240)
+* Firefox: 23+
+* Internet Explorer: yes
+* Opera: yes
+* Safari: 6+
+
 ### Licensing
 
 * Copyright (c) 2017 Malcolm VanOrder.
@@ -67,5 +80,4 @@ This structure is designed to match django's form prefix structure for easy inte
 ### Todo
 
 * Add functionality to provide a list of elements to be prepopulated on the form creation(for update forms).
-* Test minimum version of jquery.
-* Test browser support.
+* Test and improve browser support.
