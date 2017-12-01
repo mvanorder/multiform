@@ -1,8 +1,8 @@
 /*
  *
- * MultiForm 0.1 - Replicate a set of fields in a form for a one-to-many form.
- * Version 0.1b
- * @requires jQuery v3.2.1
+ * MultiForm 0.2 - Replicate a set of fields in a form for a one-to-many form.
+ * Version 0.2b
+ * @requires jQuery v1.4.3
  *
  * Copyright (c) 2017 Malcolm VanOrder
  * Licensed under the MIT license:
@@ -187,6 +187,7 @@ function MultiformContainer(containerObject) {
   this.addButton.setAttribute('type', 'button');
   this.addButton.setAttribute('class', 'btn btn-success');
   this.addButton.setAttribute('id', 'multiform-add');
+  this.controlsContainer.setAttribute('id', 'multiform-controls');
   this.controlsContainer.appendChild(this.addButton);
   this.container.appendChild(this.controlsContainer);
 
@@ -211,10 +212,26 @@ function MultiformContainer(containerObject) {
    * @param {string} prefix - The prefix to set on all field names.
    */
   $.fn.multiForm = function(prefix) {
-    // Create a template object from the first object in the jQuery selector.
-    var template = new Template(this[0], prefix);
+    // Create a list of items to prepopulate into the form and an array to populate with templates for these items.
+    var items = this.filter(".multiform-item");
+    var itemsArray = Array();
 
-    var container = new MultiformContainer(this[0]);
+    // Create a template object from the first object in the jQuery selector.
+    var template = new Template(this.not(".multiform-item")[0], prefix);
+
+    // Create the container for all form entries.
+    var container = new MultiformContainer(this.not(".multiform-item")[0]);
+
+    // Create templates from multiform-item marked with multiform-item class and populate them into the form.
+    for (var itemIndex = 0, size = items.length; itemIndex < items.length; itemIndex++) {
+      itemsArrayIndex = itemsArray.length;
+      itemsArray[itemsArrayIndex] = new Template(items[itemIndex], prefix);
+      itemsArray[itemsArrayIndex].currentIteration = itemIndex;
+      container.appendChild(itemsArray[itemsArrayIndex].createInstance());
+    }
+
+    // Since there may be items prepopulated, the form iterations for new items should start after this index.
+    template.currentIteration = items.length;
 
     // Create an instance of the template to start the form.
     container.appendChild(template.createInstance());
