@@ -1,0 +1,39 @@
+{
+  "name": "multiform",
+  "title": "multiform",
+  "version": "0.2.0",
+  "description": "Multiform is a jQuery plugin for creating a one-to-many form. It templates the elements in the first HTML element selected and creates instances of that element with the Add button prefixed with a specified prefix and the iteration of the element.",
+  "author": {
+    "name": "Malcolm VanOrder",
+    "url": "https://github.com/mvanorder/multiform"
+  },
+  "maintainers": [
+    {
+      "name": "Malcolm VanOrder",
+      "url": "https://github.com/mvanorder/multiform",
+      "email": "mvanorder1390@gmail.com"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "homepage": "https://github.com/mvanorder/multiform",
+  "bugs": "https://github.com/mvanorder/multiform/issues",
+  "docs": "https://github.com/mvanorder/multiform/blob/master/README.md",
+  "demo": "https://github.com/mvanorder/multiform/blob/master/demo.html",
+  "dependencies": {
+    "jquery": ">=1.4.3"
+  },
+  "keywords": [
+    "form",
+    "one-to-many",
+    "jquery-plugin"
+  ],
+  "main": "multiform.js",
+  "files": [
+    "multiform.min.js"
+  ]
+}
