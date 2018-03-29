@@ -73,7 +73,9 @@ function cloneFormNodes(nodes, prefix) {
   var newNodes = new Array();
 
   for (var i = 0; i < nodes.length; i++) {
-    if (nodes[i].nodeName != "#text") {
+    // Ignore all #text, #comment and #document nodes as they thrown an illegal character error in
+    // createElement().
+    if (!nodes[i].nodeName.includes('#')) {
       // Use createElement to create clones for all except #text nodes to avoid modifying the original.
       newNodes[i] = document.createElement(nodes[i].nodeName);
 
