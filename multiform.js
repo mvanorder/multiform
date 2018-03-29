@@ -127,6 +127,12 @@ function Template(baseObject, prefix) {
   this.nodes = Array();
   this.prefix = prefix;
   this.currentIteration = 0;
+  this.classList = [];
+
+  // Build a list of classes to be used on instanaces of the template.
+  for (var classIndex = 0, classCount = baseObject.classList.length; classIndex < classCount; classIndex++) {
+    this.classList.push(baseObject.classList[classIndex]);
+  }
 
   // Create a template list of nodes from the nodes in the baseObject and remove the original nodes.
   for (var nodeIndex = 0, nodeCount = baseObject.childNodes.length; nodeIndex < nodeCount; nodeIndex++) {
@@ -143,6 +149,14 @@ function Template(baseObject, prefix) {
     var nodes;
     var instanceContainer = document.createElement('div');
     var removeButton = document.createElement('div');
+
+    // Add each class from the template to the new instance.
+    for (var classIndex = 0, classCount = this.classList.length; classIndex < classCount; classIndex++) {
+      instanceContainer.classList.add(this.classList[classIndex]);
+    }
+    // Remove multiform and multiform-item classes form the new instance as they're only
+    // used to itentify items to be cloned.
+    instanceContainer.classList.remove("multiform", "multiform-item");
 
     // Create a button to remove this instance.
     removeButton.innerHTML = 'Remove';
@@ -224,12 +238,17 @@ function MultiformContainer(containerObject) {
     // Create the container for all form entries.
     var container = new MultiformContainer(this.not(".multiform-item")[0]);
 
+    // Reset the container's classList and set the id
+    container.container.classList = [];
+    container.container.id = 'multiform-container';
+
     // Create templates from multiform-item marked with multiform-item class and populate them into the form.
     for (var itemIndex = 0, size = items.length; itemIndex < items.length; itemIndex++) {
       itemsArrayIndex = itemsArray.length;
       itemsArray[itemsArrayIndex] = new Template(items[itemIndex], prefix);
       itemsArray[itemsArrayIndex].currentIteration = itemIndex;
       container.appendChild(itemsArray[itemsArrayIndex].createInstance());
+      items[itemIndex].parentElement.removeChild(items[itemIndex]);
     }
 
     // Since there may be items prepopulated, the form iterations for new items should start after this index.
