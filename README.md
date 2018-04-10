@@ -102,6 +102,13 @@ function addItem(){
 $(".multiform").multiForm("test_prefix", addItem);
 ```
 
+**Custom buttons**
+
+* **Add** button can be customized as a child of .multiform with the id of *multiform-add*.
+* **Remove** button can be customized as a child of .multiform with the id of *multiform-remove*.
+
+This is demo'd in [demo3.html](demo3.html).
+
 ### Compatability
 
 The following are based off of the compatability documented on Mozilla Developer Network for methods and properties used in the code and are not tested.

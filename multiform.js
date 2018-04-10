@@ -123,11 +123,12 @@ function cloneFormNodes(nodes, prefix) {
  * @param {object} baseObject - The DOM object containing the form objects to be templated.
  * @param {string} prefix - The prefix to set on all field names.
  */
-function Template(baseObject, prefix) {
+function Template(baseObject, prefix, removeButton) {
   this.nodes = Array();
   this.prefix = prefix;
   this.currentIteration = 0;
   this.classList = [];
+  this.removeButton = removeButton || null;
 
   // Build a list of classes to be used on instanaces of the template.
   for (var classIndex = 0, classCount = baseObject.classList.length; classIndex < classCount; classIndex++) {
@@ -148,7 +149,7 @@ function Template(baseObject, prefix) {
     var prefix = "";
     var nodes;
     var instanceContainer = document.createElement('div');
-    var removeButton = document.createElement('div');
+    var removeButton = this.removeButton || document.createElement('div');
 
     // Add each class from the template to the new instance.
     for (var classIndex = 0, classCount = this.classList.length; classIndex < classCount; classIndex++) {
@@ -159,7 +160,11 @@ function Template(baseObject, prefix) {
     instanceContainer.classList.remove("multiform", "multiform-item");
 
     // Create a button to remove this instance.
-    removeButton.innerHTML = 'Remove';
+    if (this.removeButton) {
+      removeButton = this.removeButton.cloneNode(true);
+    } else {
+      removeButton.innerHTML = 'Remove';
+    }
     removeButton.setAttribute('type', 'button');
     removeButton.setAttribute('class', 'btn btn-danger multiform-remove');
 
@@ -194,12 +199,15 @@ function Template(baseObject, prefix) {
  * @constructor
  * @param {object} containerObject - The DOM object containing multiform.
  */
-function MultiformContainer(containerObject) {
+function MultiformContainer(containerObject, addButton) {
   this.container = containerObject;
   this.controlsContainer = document.createElement('div');
-  this.addButton = document.createElement('div');
+  this.addButton = addButton || null;
 
-  this.addButton.innerHTML = 'Add';
+  if (this.addButton == null){
+    this.addButton = document.createElement('div');
+    this.addButton.innerHTML = 'Add';
+  }
   this.addButton.setAttribute('type', 'button');
   this.addButton.setAttribute('class', 'btn btn-success');
   this.addButton.setAttribute('id', 'multiform-add');
@@ -233,12 +241,23 @@ function MultiformContainer(containerObject) {
     var items = this.filter(".multiform-item");
     var itemsArray = Array();
     var postAddFunc = func || null;
+    var addButton = null;
+    var removeButton = null;
+
+    if ($(this.not(".multiform-item")).find('#multiform-add')[0]) {
+      addButton = $(this.not(".multiform-item")).find('#multiform-add')[0].cloneNode(true);
+      this.not(".multiform-item")[0].removeChild($(this.not(".multiform-item")).find('#multiform-add')[0]);
+    }
+    if ($(this.not(".multiform-item")).find('#multiform-remove')[0]) {
+      removeButton = $(this.not(".multiform-item")).find('#multiform-remove')[0].cloneNode(true);
+      this.not(".multiform-item")[0].removeChild($(this.not(".multiform-item")).find('#multiform-remove')[0]);
+    }
 
     // Create a template object from the first object in the jQuery selector.
-    var template = new Template(this.not(".multiform-item")[0], prefix);
+    var template = new Template(this.not(".multiform-item")[0], prefix, removeButton);
 
     // Create the container for all form entries.
-    var container = new MultiformContainer(this.not(".multiform-item")[0]);
+    var container = new MultiformContainer(this.not(".multiform-item")[0], addButton);
 
     // Reset the container's classList and set the id
     container.container.classList = [];
@@ -247,7 +266,7 @@ function MultiformContainer(containerObject) {
     // Create templates from multiform-item marked with multiform-item class and populate them into the form.
     for (var itemIndex = 0, size = items.length; itemIndex < items.length; itemIndex++) {
       itemsArrayIndex = itemsArray.length;
-      itemsArray[itemsArrayIndex] = new Template(items[itemIndex], prefix);
+      itemsArray[itemsArrayIndex] = new Template(items[itemIndex], prefix, removeButton);
       itemsArray[itemsArrayIndex].currentIteration = itemIndex;
       container.appendChild(itemsArray[itemsArrayIndex].createInstance());
       items[itemIndex].parentElement.removeChild(items[itemIndex]);
