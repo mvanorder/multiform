@@ -226,11 +226,13 @@ function MultiformContainer(containerObject) {
   /**
    * Build a multi-record form from a jQuery selector.
    * @param {string} prefix - The prefix to set on all field names.
+   * @param {function} func - An optional function to be called on add button click and after the appendChile completes.
    */
-  $.fn.multiForm = function(prefix) {
+  $.fn.multiForm = function(prefix, func) {
     // Create a list of items to prepopulate into the form and an array to populate with templates for these items.
     var items = this.filter(".multiform-item");
     var itemsArray = Array();
+    var postAddFunc = func || null;
 
     // Create a template object from the first object in the jQuery selector.
     var template = new Template(this.not(".multiform-item")[0], prefix);
@@ -260,8 +262,11 @@ function MultiformContainer(containerObject) {
     // When the add button is clicked create an instance of the template and append it to the container.
     $("#multiform-add").click(function() {
       container.appendChild(template.createInstance());
-    });
 
+      if (postAddFunc) {
+        postAddFunc();
+      }
+    });
     return this;
   };
 }( jQuery ));

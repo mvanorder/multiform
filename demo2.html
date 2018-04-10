@@ -138,7 +138,11 @@
 
     <script src="multiform.min.js"></script>
     <script>
-      $(".multiform").multiForm("test_prefix");
+      function addItem(){
+        $('select').formSelect();
+      }
+
+      $(".multiform").multiForm("test_prefix", addItem);
     </script>
 
     <script>

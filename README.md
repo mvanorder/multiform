@@ -90,6 +90,18 @@ This structure is designed to match django's form prefix structure for easy inte
 
 If there are prepopulated entries, these will get processed first and receive the first iterations starting with 0, any new entries created will start at index *n* where *n* is the number of prepopulated entries.
 
+**Post add function**
+
+You can specify a function to be called after the *Add* button is clicked.  An example can be seen in the demo2.html which uses Materialize.  Since Materialize requires a jQuery call to properly render select fields we'll need to do this after new ones are created.  Do to this, we can call the $.fn.multiForm() function with a function provided as the second parameter as follows:
+
+```javascript
+function addItem(){
+  $('select').formSelect();
+}
+
+$(".multiform").multiForm("test_prefix", addItem);
+```
+
 ### Compatability
 
 The following are based off of the compatability documented on Mozilla Developer Network for methods and properties used in the code and are not tested.
