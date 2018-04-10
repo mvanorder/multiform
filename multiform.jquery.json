@@ -1,7 +1,7 @@
 {
   "name": "multiform",
   "title": "multiform",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Multiform is a jQuery plugin for creating a one-to-many form. It templates the elements in the first HTML element selected and creates instances of that element with the Add button prefixed with a specified prefix and the iteration of the element.",
   "author": {
     "name": "Malcolm VanOrder",

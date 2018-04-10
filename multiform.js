@@ -1,7 +1,7 @@
 /*
  *
- * MultiForm 0.2 - Replicate a set of fields in a form for a one-to-many form.
- * Version 0.2b
+ * MultiForm 0.3 - Replicate a set of fields in a form for a one-to-many form.
+ * Version 0.3b
  * @requires jQuery v1.4.3
  *
  * Copyright (c) 2017 Malcolm VanOrder
