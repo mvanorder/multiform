@@ -214,13 +214,17 @@ function Template(baseObject, prefix, removeButton, removeButtonContainer) {
  * @constructor
  * @param {object} containerObject - The DOM object containing multiform.
  */
-function MultiformContainer(containerObject, addButton) {
+function MultiformContainer(containerObject, addButton, controlsContainer) {
   this.container = containerObject;
-  this.controlsContainer = document.createElement('div');
+  this.controlsContainer = controlsContainer || null;
   this.addButton = null;
 
   if (addButton) {
-    this.addButton = addButton.cloneNode(true);
+    if ($(containerObject).find(addButton).length){
+      this.addButton = addButton.cloneNode(true);
+    } else {
+      this.addButton = addButton;
+    }
   } else {
     this.addButton = document.createElement('div')
     this.addButton.innerHTML = 'Add';
@@ -235,9 +239,14 @@ function MultiformContainer(containerObject, addButton) {
     this.addButton.classList.add('btn-success');
   }
   this.addButton.setAttribute('id', 'multiform-add');
+  if (!this.controlsContainer) {
+    this.controlsContainer = document.createElement('div');
+    this.container.appendChild(this.controlsContainer);
+  }
   this.controlsContainer.setAttribute('id', 'multiform-controls');
-  this.controlsContainer.appendChild(this.addButton);
-  this.container.appendChild(this.controlsContainer);
+  if (! $(this.controlsContainer).find(this.addButton)) {
+    this.controlsContainer.appendChild(this.addButton);
+  }
 
   /**
    * Append a child to the container.  This is simply created to prevent container.container.appendChild()
@@ -266,7 +275,8 @@ function MultiformContainer(containerObject, addButton) {
     var itemsArray = Array();
     var postAddFunc = func || null;
     var itemTemplate = $(this.not(".multiform-item"))[0]
-    var addButtonTemplate = $(itemTemplate).children('#multiform-add')[0] || null;
+    var controlsContainer = $('#multiform-controls-container')[0] || null;
+    var addButtonTemplate = $('#multiform-add')[0] || null;
     var addButton = null;
     var removeButtonContainerTemplate = $(itemTemplate).children('#multiform-remove-container')[0] || null;
     var removeButtonContainer = null;
@@ -280,8 +290,12 @@ function MultiformContainer(containerObject, addButton) {
     }
 
     if (addButtonTemplate) {
-      addButton = addButtonTemplate.cloneNode(true);
-      itemTemplate.removeChild(addButtonTemplate);
+      if ($(itemTemplate).find(addButtonTemplate).length){
+        addButton = addButtonTemplate.cloneNode(true);
+        itemTemplate.removeChild(addButtonTemplate);
+      } else {
+        addButton = addButtonTemplate;
+      }
     }
     if (removeButtonTemplate) {
       removeButton = removeButtonTemplate.cloneNode(true);
@@ -300,7 +314,7 @@ function MultiformContainer(containerObject, addButton) {
     var template = new Template(this.not(".multiform-item")[0], prefix, removeButton, removeButtonContainer);
 
     // Create the container for all form entries.
-    var container = new MultiformContainer(this.not(".multiform-item")[0], addButton);
+    var container = new MultiformContainer(this.not(".multiform-item")[0], addButton, controlsContainer);
 
     // Reset the container's classList and set the id
     container.container.classList = [];
