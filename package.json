@@ -1,0 +1,27 @@
+{
+  "name": "multiform",
+  "description": "Multiple form generator for n length forms",
+  "author": "Malcolm VanOrder",
+  "version": "0.3.0",
+  "main": "multiform.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mvanorder/multiform.git"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "1.0.1",
+    "grunt-babel": "^6.0.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jasmine": "^1.1.0",
+    "jasmine": "^2.6.0",
+    "jasmine-jquery": "^2.1.1",
+    "jquery": "^3.2.1"
+  },
+  "files": []
+}
