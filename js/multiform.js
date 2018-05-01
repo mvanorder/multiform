@@ -141,10 +141,13 @@ class Template{
 
     // Create a template list of nodes from the nodes in the baseObject and
     // remove the original nodes.
-    baseObject.childNodes.forEach(
+
+    console.log([].from(baseObject.childNodes))
+    Array.from(baseObject.childNodes).forEach(
       (node, nodeIndex, listObj) => {
         this.nodes.push(node.cloneNode(true));
         baseObject.removeChild(node);
+
       },
       this
     );
@@ -155,7 +158,7 @@ class Template{
    * @return {object} A div element containing a clone of the nodes in this
    * template.
    */
-  createInstance = () => {
+  createInstance () {
     var prefix = "";
     var nodes;
     var instanceContainer = document.createElement('div');
