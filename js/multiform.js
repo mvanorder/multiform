@@ -117,36 +117,45 @@ function cloneFormNodes(nodes, prefix) {
   return newNodes;
 }
 
-/**
- * Represents a template instance of the form to be replicated.
- * @constructor
- * @param {object} baseObject - The DOM object containing the form objects to be templated.
- * @param {string} prefix - The prefix to set on all field names.
- */
-function Template(baseObject, prefix, removeButton, removeButtonContainer) {
-  this.nodes = Array();
-  this.prefix = prefix;
-  this.currentIteration = 0;
-  this.classList = [];
-  this.removeButton = removeButton || null;
-  this.removeButtonContainer = removeButtonContainer || null;
+class Template{
 
-  // Build a list of classes to be used on instanaces of the template.
-  for (var classIndex = 0, classCount = baseObject.classList.length; classIndex < classCount; classIndex++) {
-    this.classList.push(baseObject.classList[classIndex]);
-  }
+  /**
+   * Represents a template instance of the form to be replicated.
+   * @constructor
+   * @param {object} baseObject - The DOM object containing the form objects to
+   * be templated.
+   * @param {string} prefix - The prefix to set on all field names.
+   */
+  constructor(baseObject, prefix, removeButton, removeButtonContainer) {
+    this.nodes = new Array();
+    this.prefix = prefix;
+    this.currentIteration = 0;
+    this.classList = [];
+    this.removeButton = removeButton || null;
+    this.removeButtonContainer = removeButtonContainer || null;
 
-  // Create a template list of nodes from the nodes in the baseObject and remove the original nodes.
-  for (var nodeIndex = 0, nodeCount = baseObject.childNodes.length; nodeIndex < nodeCount; nodeIndex++) {
-    this.nodes[nodeIndex] = baseObject.childNodes[0].cloneNode(true);
-    baseObject.removeChild(baseObject.childNodes[0]);
+    // Build a list of classes to be used on instanaces of the template.
+    for (let classIndex in baseObject.classList) {
+      this.classList.push(baseObject.classList[classIndex]);
+    }
+
+    // Create a template list of nodes from the nodes in the baseObject and
+    // remove the original nodes.
+    baseObject.childNodes.forEach(
+      (node, nodeIndex, listObj) => {
+        this.nodes.push(node.cloneNode(true));
+        baseObject.removeChild(node);
+      },
+      this
+    );
   }
 
   /**
    * Creates a new instance from the template.
-   * @return {object} A div element containing a clone of the nodes in this template.
+   * @return {object} A div element containing a clone of the nodes in this
+   * template.
    */
-  this.createInstance = function() {
+  createInstance = () => {
     var prefix = "";
     var nodes;
     var instanceContainer = document.createElement('div');
@@ -204,8 +213,6 @@ function Template(baseObject, prefix, removeButton, removeButtonContainer) {
 
     // Increment the iteration counter.
     this.currentIteration++;
-
-    return instanceContainer;
   }
 }
 
@@ -275,7 +282,7 @@ function MultiformContainer(containerObject, addButton, controlsContainer) {
   $.fn.multiFormTemplate = function() {
     this.each( function () {
       template_prefix = $(this).data('prefix');
-      multiForm.templates[template_prefix] = Template(this, template_prefix);
+      multiForm.templates[template_prefix] = new Template(this, template_prefix);
       console.log(multiForm.templates)
     });
   }
