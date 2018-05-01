@@ -264,6 +264,22 @@ function MultiformContainer(containerObject, addButton, controlsContainer) {
 }
 
 (function( $ ) {
+  multiForm = {};
+  multiForm.templates = {};
+
+  /**
+   * Build a template for a multi-record form from a jQuery selector.
+   * @param {function} func - An optional function to be called on add button
+   * click and after the appendChild completes.
+   */
+  $.fn.multiFormTemplate = function() {
+    this.each( function () {
+      template_prefix = $(this).data('prefix');
+      multiForm.templates[template_prefix] = Template(this, template_prefix);
+      console.log(multiForm.templates)
+    });
+  }
+
   /**
    * Build a multi-record form from a jQuery selector.
    * @param {string} prefix - The prefix to set on all field names.

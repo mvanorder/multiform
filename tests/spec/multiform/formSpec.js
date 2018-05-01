@@ -4,8 +4,9 @@ describe( "Multiform", function () {
     loadFixtures('multiform/formFixture.html');
   });
 
-  it("form is generated", function() {
-    var template = $('.multiform-template')
-    expect(true).toBe(true);
+  it("template is generated", function() {
+    $('.multiform-template').multiFormTemplate();
+
+    expect(Object.keys(multiForm.templates).length).toBe(1);
   });
 });

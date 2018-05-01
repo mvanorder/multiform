@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     jasmine: {
       components: {
         src: [
-          'bim/multiform.js'
+          'bin/multiform.js'
         ],
         options: {
           vendor: [
