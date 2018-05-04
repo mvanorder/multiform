@@ -284,7 +284,7 @@ function MultiformContainer(containerObject, addButton, controlsContainer) {
    */
   $.fn.multiFormTemplate = function() {
     this.each( function () {
-      template_prefix = $(this).data('prefix');
+      let template_prefix = $(this).data('prefix');
       multiForm.templates[template_prefix] = new Template(this, template_prefix);
       console.log(multiForm.templates)
     });

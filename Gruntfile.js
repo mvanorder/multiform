@@ -25,11 +25,6 @@ module.exports = function(grunt) {
 		  options: {
 			  sourceMap: false,
 			  plugins: [
-          'transform-es2015-arrow-functions',
-          'transform-es2015-block-scoping',
-          'transform-es2015-classes',
-          'transform-es2015-template-literals',
-          'transform-es2015-object-super'
         ]
 		  },
 		  bin: {
@@ -62,6 +57,7 @@ module.exports = function(grunt) {
       dist: {
         // the files to concatenate
         src: [
+          "js/polyfill.js",
           "js/multiform.js",
         ],
         // the location of the resulting JS file
@@ -74,6 +70,7 @@ module.exports = function(grunt) {
           sourceMapStyle: 'link'
         },
         src: [
+          "js/polyfill.js",
           "js/multiform.js",
         ],
         // the location of the resulting JS file
