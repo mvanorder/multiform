@@ -25,6 +25,13 @@ module.exports = function(grunt) {
 		  options: {
 			  sourceMap: false,
 			  plugins: [
+        ],
+        presets: [
+          ["env", {
+            "targets": {
+              "chrome": "45"
+            }
+          }]
         ]
 		  },
 		  bin: {

@@ -142,7 +142,6 @@ class Template{
     // Create a template list of nodes from the nodes in the baseObject and
     // remove the original nodes.
 
-    console.log([].from(baseObject.childNodes))
     Array.from(baseObject.childNodes).forEach(
       (node, nodeIndex, listObj) => {
         this.nodes.push(node.cloneNode(true));
@@ -273,8 +272,9 @@ function MultiformContainer(containerObject, addButton, controlsContainer) {
   }
 }
 
+var multiForm = {};
+
 (function( $ ) {
-  multiForm = {};
   multiForm.templates = {};
 
   /**
