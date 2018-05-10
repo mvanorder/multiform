@@ -218,6 +218,67 @@ class Template{
   }
 }
 
+
+class multiFormInstance{
+  constructor(containerObject) {
+    this.container = containerObject;
+    this.prefix = $(this.container).data('prefix');
+    this.items = new Array();
+    let addButtonTemplate = $('#' + this.prefix + '-add_button'
+      )[0] || undefined;
+    let removeButtonContainerTemplate = $(this.container).children(
+      '.remove-container')[0] || undefined;
+    let removeButtonTemplate = $(removeButtonContainerTemplate || this.container
+      ).children('#multiform-remove')[0] || undefined;
+    console.log(addButtonTemplate);
+    console.log(removeButtonContainerTemplate);
+
+    if (addButtonTemplate) {
+      // If the add button template is in the multiform template, then clone
+      // it for later use and remove the original.  Otherwise, use the
+      // existing button where it's located.
+      if ($(this.container).find(addButtonTemplate).length) {
+        this.addButton = addButtonTemplate.cloneNode(true);
+        this.container.removeChild(addButtonTemplate);
+      } else {
+        this.addButton = addButtonTemplate;
+      }
+    }
+
+    // Clone the remove button template and remove the original
+    if (removeButtonTemplate) {
+      this.removeButton = removeButtonTemplate.cloneNode(true);
+      if (removeButtonContainerTemplate) {
+        removeButtonContainerTemplate.removeChild(removeButtonTemplate);
+      } else {
+        this.container.removeChild(removeButtonTemplate);
+      }
+    }
+
+    // Create a template object from the first object in the jQuery selector.
+    this.template = new Template(
+      this.container,
+      this.prefix,
+      this.removeButton,
+      this.removeButtonContainer
+    );
+
+    this.addItem = (index, item) => {
+      console.log(item)
+      this.items[index] = new Template(
+        item,
+        this.prefix,
+        this.removeButton,
+        this.removeButtonContainer
+      );
+      this.items[index].currentIteration = index;
+      this.container.appendChild(this.items[index].createInstance());
+      this.items[index].parentElement.removeChild(items[itemIndex]);
+    }
+    $('.' + this.prefix + '-multiform_item').each(this.addItem, this);
+
+  }
+}
 /**
  * Represents the container for the multiform instances and controls.
  * @constructor
@@ -276,6 +337,7 @@ var multiForm = {};
 
 (function( $ ) {
   multiForm.templates = {};
+  multiForm.forms = {};
 
   /**
    * Build a template for a multi-record form from a jQuery selector.
@@ -283,10 +345,16 @@ var multiForm = {};
    * click and after the appendChild completes.
    */
   $.fn.multiFormTemplate = function() {
+    // Iterate each template
     this.each( function () {
       let template_prefix = $(this).data('prefix');
-      multiForm.templates[template_prefix] = new Template(this, template_prefix);
-      console.log(multiForm.templates)
+      // Create the container for all form entries.
+      multiForm.forms[template_prefix] = new multiFormInstance(
+        this
+      );
+
+      console.log(multiForm.forms);
+      console.log(multiForm.forms[template_prefix]);
     });
   }
 
@@ -328,7 +396,7 @@ var multiForm = {};
       if (removeButtonContainerTemplate) {
         removeButtonContainerTemplate.removeChild(removeButtonTemplate);
       } else {
-	itemTemplate.removeChild(removeButtonTemplate);
+        itemTemplate.removeChild(removeButtonTemplate);
       }
     }
     if (removeButtonContainerTemplate) {
@@ -346,7 +414,8 @@ var multiForm = {};
     container.container.classList = [];
     container.container.id = 'multiform-container';
 
-    // Create templates from multiform-item marked with multiform-item class and populate them into the form.
+    // Create templates from multiform-item marked with multiform-item class and
+    // populate them into the form.
     for (var itemIndex = 0, size = items.length; itemIndex < items.length; itemIndex++) {
       itemsArrayIndex = itemsArray.length;
       itemsArray[itemsArrayIndex] = new Template(items[itemIndex], prefix, removeButton, removeButtonContainer);

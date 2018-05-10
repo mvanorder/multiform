@@ -25,7 +25,7 @@
           <form action="" method="post">
             <p><label for="id_recipe-name">Name:</label> <input type="text" name="recipe-name" value="" required maxlength="30" id="id_recipe-name" /></p>
             <p><label for="id_recipe-directions">Directions:</label> <textarea name="recipe-directions" required rows="10" cols="40" id="id_recipe-directions"></textarea></p>
-            <div class="multiform multiform-item row">
+            <div class="test_prefix-multiform_item row">
               <div class="input-field col m8">
                 <select name="ingredient" required id="id_ingredient">
                   <option value="">---------</option>
@@ -58,7 +58,7 @@
                 <label for="id_quantity">Quantity:</label>
               </div>
             </div>
-            <div class="multiform multiform-item row">
+            <div class="test_prefix-multiform_item row">
               <div class="input-field col m8">
                 <select name="ingredient" required id="id_ingredient">
                   <option value="">---------</option>
@@ -91,8 +91,8 @@
                 <label for="id_quantity">Quantity:</label>
               </div>
             </div>
-            <div class="multiform row">
-              <div id="multiform-add" class="waves-effect waves-light">
+            <div class="multiform-template row" data-prefix="test_prefix">
+              <div id="test_prefix-add_button" class="waves-effect waves-light">
                 New Ingredient
               </div>
               <!-- Comments will be ignored when templating the form out -->
@@ -127,8 +127,8 @@
                 </select>
                 <label for="id_quantity">Quantity:</label>
               </div>
-              <div id="multiform-remove-container" class="col m1">
-                <div id="multiform-remove" class="btn btn-floating btn-small waves-effect waves-light red">
+              <div class="remove-container" class="col m1">
+                <div class="remove-button" class="btn btn-floating btn-small waves-effect waves-light red">
                   X
                 </div>
               </div>
