@@ -92,7 +92,7 @@
               </div>
             </div>
             <div class="multiform-template row" data-prefix="test_prefix">
-              <div id="test_prefix-add_button" class="waves-effect waves-light">
+              <div id="test_prefix-add_button" class="btn waves-effect waves-light">
                 New Ingredient
               </div>
               <!-- Comments will be ignored when templating the form out -->
@@ -127,7 +127,7 @@
                 </select>
                 <label for="id_quantity">Quantity:</label>
               </div>
-              <div class="remove-container" class="col m1">
+              <div class="remove-container" class="input-field col m1">
                 <div class="remove-button" class="btn btn-floating btn-small waves-effect waves-light red">
                   X
                 </div>
@@ -148,19 +148,15 @@
       function addItem(){
         $('select').formSelect();
       }
+      $( ".multiform-template" ).multiFormTemplate();
 
-      $(".multiform").multiForm("test_prefix", addItem);
+      //$(".multiform").multiForm("test_prefix", addItem);
     </script>
 
     <script>
-        var elem = document.querySelector('select');
-        var instance = M.FormSelect.init(elem);
-
-   // Or with jQuery
-
-   $(document).ready(function(){
-          $('select').formSelect();
-          });
+      $(document).ready(function(){
+        $('select').formSelect();
+      });
     </script>
 
   </body>

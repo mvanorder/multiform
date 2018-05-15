@@ -24,7 +24,7 @@
           <form action="" method="post">
             <p><label for="id_recipe-name">Name:</label> <input type="text" name="recipe-name" value="" required maxlength="30" id="id_recipe-name" /></p>
             <p><label for="id_recipe-directions">Directions:</label> <textarea name="recipe-directions" required rows="10" cols="40" id="id_recipe-directions"></textarea></p>
-            <div class="multiform multiform-item row">
+            <div class="test_prefix-multiform_item row">
               <div class="input-field col m8">
                 <select name="ingredient" required id="id_ingredient">
                   <option value="">---------</option>
@@ -57,7 +57,7 @@
                 <label for="id_quantity">Quantity:</label>
               </div>
             </div>
-            <div class="multiform multiform-item row">
+            <div class="test_prefix-multiform_item row">
               <div class="input-field col m8">
                 <select name="ingredient" required id="id_ingredient">
                   <option value="">---------</option>
@@ -145,14 +145,9 @@
     </script>
 
     <script>
-        var elem = document.querySelector('select');
-        var instance = M.FormSelect.init(elem);
-
- 	// Or with jQuery
-
- 	$(document).ready(function(){
-          $('select').formSelect();
-          });
+      $(document).ready(function(){
+        $('select').formSelect();
+      });
     </script>
 
   </body>
