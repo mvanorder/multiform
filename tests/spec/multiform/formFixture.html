@@ -1,3 +1,36 @@
+<div class="test_prefix-multiform_item row">
+  <div class="input-field col m8">
+    <select name="ingredient" required id="id_ingredient">
+      <option value="">---------</option>
+      <option value="1">butter</option>
+      <option value="2">flour</option>
+      <option value="3">milk</option>
+      <option value="4" selected>eggs</option>
+    </select>
+    <label for="id_ingredient">Ingredient:</label>
+  </div>
+  <div class="input-field col m1">
+    <input type="text" name="quantity_amount" required maxlength="8" id="id_quantity_amount" value="1" />
+    <label for="id_quantity_amount">Qty:</label>
+  </div>
+  <div class="input-field col m2">
+    <select name="quantity" id="id_quantity">
+      <option value="">---------</option>
+      <option value="1" selected>count</option>
+      <option value="2">dozen</option>
+      <option value="3">Dash</option>
+      <option value="4">Pinch</option>
+      <option value="5">Teaspoon</option>
+      <option value="6">Tablespoon</option>
+      <option value="7">Fluid ounce</option>
+      <option value="8">Cup</option>
+      <option value="9">Pint</option>
+      <option value="10">Quart</option>
+      <option value="11">Gallon</option>
+    </select>
+    <label for="id_quantity">Quantity:</label>
+  </div>
+</div>
 <div class="multiform-template row" data-prefix="test_prefix">
   <!-- Comments will be ignored when templating the form out -->
   <div class="input-field col m8">

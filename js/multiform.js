@@ -136,8 +136,8 @@ class Template {
     this.removeButtonContainer = args.removeButtonContainer || undefined;
 
     // Build a list of classes to be used on instanaces of the template.
-    for (let entry of baseObject.classList.entries()) {
-      this.classList.push(entry[1]);
+    for (let i = 0; i < baseObject.classList.length; i++) {
+      this.classList.push(baseObject.classList[i]);
     }
 
     // Create a template list of nodes from the nodes in the baseObject and
@@ -282,7 +282,6 @@ class multiFormInstance{
       this.prefix + '-multiform_controls'
     );
 
-    console.log(this.controlsContainer);
     // Locate a template for the add button or create one, then clone and remove
     // the template if it exists inside the container.
     if (this.addButtonTemplate) {
@@ -318,26 +317,21 @@ class multiFormInstance{
     // Clone remove button from template or create remove button, then
 
     if (this.removeButtonTemplate && this.removeButtonContainerTemplate) {
-      console.log('Found both templates');
       this.removeButtonContainerTemplate.removeChild(this.removeButtonTemplate);
+      this.removeButton = this.removeButtonTemplate;
     } else if (this.removeButtonContainerTemplate) {
-      console.log('Found container template');
       this.removeButton = document.createElement('div');
       this.removeButton.innerHTML = 'X';
       removeButtonContainerTemplate.removeChild(this.removeButtonTemplate);
     } else if (this.removeButtonTemplate) {
-      console.log('Found button template');
       this.removeButton = this.removeButtonTemplate.cloneNode(true);
       this.container.removeChild(this.removeButtonTemplate);
     } else {
-      console.log('Creating remove button');
       this.removeButton = document.createElement('div');
       this.removeButton.innerHTML = 'X';
     }
-  }
 
-  populateItems() {
-
+    this.removeButton.classList.add(this.prefix + '-multiform_remove');
   }
 
   constructor(container) {
@@ -355,6 +349,7 @@ class multiFormInstance{
     ).children('.remove-button')[0] || undefined;
     this.items = new Array();
     let items = $('.' + this.prefix + '-multiform_item');
+    this.postAddFunc = undefined;
 
     this.setupControls()
     this.setupRemoveButton()
@@ -367,6 +362,7 @@ class multiFormInstance{
       removeButtonContainer: this.removeButtonContainer
     });
 
+    // Add controls container before items
     this.container.appendChild(this.controlsContainer);
 
     // Build the list of items generated from items with a class of
@@ -392,11 +388,11 @@ class multiFormInstance{
 
     // When the add button is clicked create an instance of the template and
     // append it to the container.
-    $("#multiform-add").click(function() {
+    $("#" + this.prefix + "-multiform_add").click(() => {
       this.container.appendChild(this.template.instance());
 
-      if (postAddFunc) {
-        postAddFunc();
+      if (this.postAddFunc) {
+        this.postAddFunc();
       }
     });
   }
@@ -459,7 +455,6 @@ function MultiformContainer(containerObject, addButton, controlsContainer) {
 var multiForm = {};
 
 (function( $ ) {
-  multiForm.templates = {};
   multiForm.forms = {};
 
   /**
