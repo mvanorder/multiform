@@ -280,11 +280,19 @@ class Template {
 class multiFormInstance{
 
   setupControls() {
-    // Set the controls container's ID to <prefix>-multiform_controls
-    this.controlsContainer.setAttribute(
-      'id',
-      this.prefix + '-multiform_controls'
-    );
+    if (this.controlsContainerTemplate) {
+      this.controlsContainer = this.controlsContainerTemplate.cloneNode(true);
+      this.controlsContainerTemplate.parentElement.removeChild(
+        this.controlsContainerTemplate
+      );
+    } else {
+      this.controlsContainer = document.createElement('div');
+      // Set the controls container's ID to <prefix>-multiform_controls
+      this.controlsContainer.setAttribute(
+        'id',
+        this.prefix + '-multiform_controls'
+      );
+    }
 
     // Locate a template for the add button or create one, then clone and remove
     // the template if it exists inside the container.
@@ -338,10 +346,12 @@ class multiFormInstance{
     this.removeButton.classList.add(this.prefix + '-multiform_remove');
   }
 
-  constructor(container, postAddFunction) {
+  constructor(container, args) {
     this.container = container;
-    this.controlsContainer = document.createElement('div');
     this.prefix = $(this.container).data('prefix');
+    this.controlsContainerTemplate = $('#' + this.prefix + '-multiform_controls'
+      )[0];
+    this.controlsContainer = undefined;
     this.addButtonTemplate = $('#' + this.prefix + '-add_button'
       )[0] || undefined;
     this.addButton = undefined;
@@ -353,7 +363,10 @@ class multiFormInstance{
     ).children('.remove-button')[0] || undefined;
     this.items = new Array();
     let items = $('.' + this.prefix + '-multiform_item');
-    this.postAddFunction = postAddFunction || undefined;
+    this.postAddFunction = undefined;
+    if (args) {
+      this.postAddFunction = args.postAddFunction;
+    }
 
     this.setupControls()
     this.setupRemoveButton()
@@ -399,6 +412,16 @@ class multiFormInstance{
         this.postAddFunction();
       }
     });
+    if (args) {
+      // Remove all classes from the container.
+      for (var i = 0; i < this.container.classList.length + 1; i++) {
+        this.container.classList.remove(
+          this.container.classList[this.container.classList.length - 1]
+        );
+      }
+      // Add specified classes to the container.
+      this.container.classList.add(args.containerClassList);
+    }
   }
 }
 
@@ -470,14 +493,10 @@ var multiForm = {};
     // Iterate each template
     this.each( function () {
       let template_prefix = $(this).data('prefix');
-      let postAddFunction = undefined;
-      if (args) {
-        postAddFunction = args.postAddFunction;
-      }
 
       // Create the container for all form entries.
       multiForm.forms[template_prefix] = new multiFormInstance(
-        this, postAddFunction
+        this, args
       );
     });
   }
