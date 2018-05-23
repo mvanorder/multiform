@@ -201,6 +201,10 @@ class Template {
 
     // Increment the iteration counter.
     this.currentIteration++;
+    $(removeButton).click(() => {
+      instanceContainer.parentElement.removeChild(instanceContainer);
+    });
+
     return instanceContainer;
   }
 
@@ -334,7 +338,7 @@ class multiFormInstance{
     this.removeButton.classList.add(this.prefix + '-multiform_remove');
   }
 
-  constructor(container) {
+  constructor(container, postAddFunction) {
     this.container = container;
     this.controlsContainer = document.createElement('div');
     this.prefix = $(this.container).data('prefix');
@@ -349,7 +353,7 @@ class multiFormInstance{
     ).children('.remove-button')[0] || undefined;
     this.items = new Array();
     let items = $('.' + this.prefix + '-multiform_item');
-    this.postAddFunc = undefined;
+    this.postAddFunction = postAddFunction || undefined;
 
     this.setupControls()
     this.setupRemoveButton()
@@ -391,8 +395,8 @@ class multiFormInstance{
     $("#" + this.prefix + "-multiform_add").click(() => {
       this.container.appendChild(this.template.instance());
 
-      if (this.postAddFunc) {
-        this.postAddFunc();
+      if (this.postAddFunction) {
+        this.postAddFunction();
       }
     });
   }
@@ -462,13 +466,15 @@ var multiForm = {};
    * @param {function} func - An optional function to be called on add button
    * click and after the appendChild completes.
    */
-  $.fn.multiFormTemplate = function() {
+  $.fn.multiFormTemplate = function(args) {
     // Iterate each template
     this.each( function () {
       let template_prefix = $(this).data('prefix');
 
       // Create the container for all form entries.
-      multiForm.forms[template_prefix] = new multiFormInstance(this);
+      multiForm.forms[template_prefix] = new multiFormInstance(
+        this, args.postAddFunction
+      );
     });
   }
 

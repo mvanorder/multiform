@@ -136,15 +136,12 @@
 
     <script src="../js/multiform.min.js"></script>
     <script>
-      function addItem(){
-        $('select').formSelect();
-      }
-      $( ".multiform-template" ).multiFormTemplate();
+      $( ".multiform-template" ).multiFormTemplate({
+        postAddFunction: function() {
+          $('select').formSelect();
+        }
+      });
 
-      //$(".multiform").multiForm("test_prefix", addItem);
-    </script>
-
-    <script>
       $(document).ready(function(){
         $('select').formSelect();
       });
