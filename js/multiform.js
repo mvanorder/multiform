@@ -470,10 +470,14 @@ var multiForm = {};
     // Iterate each template
     this.each( function () {
       let template_prefix = $(this).data('prefix');
+      let postAddFunction = undefined;
+      if (args) {
+        postAddFunction = args.postAddFunction;
+      }
 
       // Create the container for all form entries.
       multiForm.forms[template_prefix] = new multiFormInstance(
-        this, args.postAddFunction
+        this, postAddFunction
       );
     });
   }

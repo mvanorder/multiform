@@ -91,3 +91,15 @@ describe( "Multiform", function () {
     }
   );
 });
+
+describe( "Multiform-minimal", function () {
+
+  beforeEach(function() {
+    loadFixtures('multiform/formFixture.html');
+    $('.multiform-template').multiFormTemplate();
+  });
+
+  it("doesn't error with no arguements", function() {
+    expect(1).toBe(1);
+  });
+});
