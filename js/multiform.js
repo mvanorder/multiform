@@ -190,11 +190,13 @@ class Template {
       instanceContainer.appendChild(nodes[node]);
     }
 
+    let removeButtonContainer = undefined;
     // Append the remove button last.
     if (this.removeButtonContainer) {
       removeButtonContainer = this.removeButtonContainer.cloneNode(true);
       instanceContainer.appendChild(removeButtonContainer);
       removeButtonContainer.appendChild(removeButton);
+      console.log(removeButtonContainer);
     } else {
       instanceContainer.appendChild(removeButton);
     }
@@ -327,10 +329,13 @@ class multiFormInstance{
   setupRemoveButton() {
     // Clone the remove button template and remove the original
     // Clone remove button from template or create remove button, then
-
     if (this.removeButtonTemplate && this.removeButtonContainerTemplate) {
       this.removeButtonContainerTemplate.removeChild(this.removeButtonTemplate);
+      this.removeButtonContainerTemplate.parentElement.removeChild(
+        this.removeButtonContainerTemplate
+      );
       this.removeButton = this.removeButtonTemplate;
+      this.removeButtonContainer = this.removeButtonContainerTemplate;
     } else if (this.removeButtonContainerTemplate) {
       this.removeButton = document.createElement('div');
       this.removeButton.innerHTML = 'X';

@@ -10,6 +10,11 @@
     <title>Multiform demo</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <style>
+      .multiform-remove {
+        margin-top: 2rem;
+      }
+    </style>
   </head>
 
   <body>
@@ -20,10 +25,10 @@
       <div class="row">
         <div class="col-12">
           <form action="" method="post">
-            <p><label for="id_recipe-name">Name:</label> <input type="text" name="recipe-name" value="" required maxlength="30" id="id_recipe-name" /></p>
-            <p><label for="id_recipe-directions">Directions:</label> <textarea name="recipe-directions" required rows="10" cols="40" id="id_recipe-directions"></textarea></p>
+            <p><label for="id_recipe-name">Name:</label> <input type="text" name="recipe-name" value="" required maxlength="30" id="id_recipe-name" class="form-control"/></p>
+            <p><label for="id_recipe-directions">Directions:</label> <textarea name="recipe-directions" required rows="10" cols="40" id="id_recipe-directions" class="form-control"></textarea></p>
             <div class="test_prefix-multiform_item row">
-              <div class="col-md-8 form-group">
+              <div class="col-md-7 form-group">
                 <label for="id_ingredient">Ingredient:</label>
                 <select class="form-control" name="ingredient" required id="id_ingredient">
                   <option value="">---------</option>
@@ -56,7 +61,7 @@
               </div>
             </div>
             <div class="test_prefix-multiform_item row">
-              <div class="col-md-8 form-group">
+              <div class="col-md-7 form-group">
                 <label for="id_ingredient">Ingredient:</label>
                 <select class="form-control" name="ingredient" required id="id_ingredient">
                   <option value="">---------</option>
@@ -91,7 +96,7 @@
             <div class="multiform-template row" data-prefix="test_prefix">
               <!-- Comments will be ignored when templating the form out -->
               <div id="test_prefix-multiform_controls" class="col-xs-12"></div>
-              <div class="col-md-8 form-group">
+              <div class="col-md-7 form-group">
                 <label for="id_ingredient">Ingredient:</label>
                 <select class="form-control" name="ingredient" required id="id_ingredient">
                   <option value="" selected>---------</option>
@@ -121,6 +126,11 @@
                   <option value="10">Quart</option>
                   <option value="11">Gallon</option>
                 </select>
+              </div>
+              <div class="remove-container col-md-2 form-group">
+                <button class="remove-button" class="btn btn btn-danger">
+                  Remove
+                </button>
               </div>
             </div>
             <input type="submit" value="Save" class="btn btn-primary" />
