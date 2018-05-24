@@ -1,11 +1,10 @@
 ## MultiForm
 
-Multiform is a jQuery plugin for creating a one-to-many form.  It templates the elements in the first HTML element selected and creates instances of that element with the Add button prefixed with a specified prefix and the iteration of the element.
+Multiform is a jQuery plugin for creating a one-to-many form with n iterations.  It templates the elements in the selected HTML element and creates instances of that element with the Add button. These instances get prefixed with a specified prefix and the iteration of the element.
 
 ### Requirements
 
 * jQuery 1.4.3 or greater
-* Bootstrap - This is only for styling the buttons, you can optionally style them with custom stylesheets.  The button classes match bootstrap v3 standards.
 
 **Note:** Bootstrap complains if jQuery is below version 1.9.1, however this plugin only uses bootstrap's CSS.
 
@@ -13,10 +12,10 @@ Multiform is a jQuery plugin for creating a one-to-many form.  It templates the 
 
 **Basic usage**
 
-As shown in demo.html you need an element which contains all the elements to be templated.  Example:
+As shown in the demos you need an element which contains all the elements to be templated.  Example:
 
 ```html
-<div class="multiform">
+<div class="multiform-template" data-prefix="test_prefix">
   <label for="id_ingredient">Ingredient:</label>
   <select name="ingredient" required id="id_ingredient">
     <option value="" selected>---------</option>
@@ -45,46 +44,42 @@ As shown in demo.html you need an element which contains all the elements to be 
 </div>
 ```
 
-In order to apply the multiform plugin simply add the javascript and call it as follows:
+In order to apply the multiform plugin simply add the JavaScript and call it as follows:
 
 ```html
 <script src="multiform.js"></script>
 <script>
-  $(".multiform").multiForm("test_prefix");
+  $(".multiform-template").multiFormTemplate();
 </script>
 ```
-the multiform function accepts one string parameter, it is the prefix which will be added to every cloned element.  Any element with a name or id or any *for* attribute in a label will be prepended with the following:
+the multiform function accepts one string parameter, it is the prefix which will be added to every cloned element.  Any element with a name or id, and any *for* attribute in labels will be prepended with ```{{prefix}}_{{iteration}}-```
 
 **Prepopulating entries**
 
-As shown in demo.html there are 3 divs with the multiform class, but 2 of them have the *multiform-item* class as follows:
+As shown in the demos there are 3 divs containing fields, but 2 of them have the *test_prefix-multiform_item* class as follows:
 
 ```html
-<div class="multiform multiform-item">
+<div class="test_prefix-multiform_item">
 
   ...
 
 </div>
-<div class="multiform multiform-item">
+<div class="test_prefix-multiform_item">
 
   ...
 
 </div>
-<div class="multiform">
+<div class="multiform-template" data-prefix="test_prefix">
 
   ...
 
 </div>
 ```
-The shared class is not important as it's used in your javascript selector which multiform() is called on, however multiform looks for the *multiform-item* class to determine which items are prepopulated and should be imported as entries then prefixed.
+Multiform looks for the *{{prefix}}_{{iteration}}-multiform_item* class to determine which items are prepopulated and should be imported as entries for this form.
 
 **Element prefixing**
 
 ```{{prefix}}_{{iteration}}-```
-
-if no prefix is provided, then it will be prepended as follows:
-
-```{{iteration}}-```
 
 This structure is designed to match django's form prefix structure for easy integration into django views and forms, and should be easily adoptable into other frameworks
 
@@ -92,33 +87,26 @@ If there are prepopulated entries, these will get processed first and receive th
 
 **Post add function**
 
-You can specify a function to be called after the *Add* button is clicked.  An example can be seen in the demo2.html which uses Materialize.  Since Materialize requires a jQuery call to properly render select fields we'll need to do this after new ones are created.  Do to this, we can call the $.fn.multiForm() function with a function provided as the second parameter as follows:
+You can specify a function to be called after the *Add* button is clicked.  An example can be seen in the materialize-demo.html and materialize-demo_custom_comtainers.html.  Since Materialize requires a jQuery call to properly render select fields we'll need to do this after new ones are created.  Do to this, we can pass a function as the postAddFunction argument to $.fn.multiFormTemplate() as follows:
 
 ```javascript
-function addItem(){
-  $('select').formSelect();
-}
-
-$(".multiform").multiForm("test_prefix", addItem);
+$( ".multiform-template" ).multiFormTemplate({
+  postAddFunction: function() {
+    $('select').formSelect();
+  }
+});
 ```
 
-**Custom buttons**
+**Custom buttons and containers**
 
-* **Add** button can be customized as a child of .multiform with the id of *multiform-add*.
-* **Remove** button can be customized as a child of .multiform with the id of *multiform-remove*.
+* **Add** button can be customized as an element with an id of *{{prefix}}_{{iteration}}-add_button*.  If the template is in .multiform-template, it will be relocated to a controls container at the top of the form.  Otherwise it will be left where it is.
+* **Controls container** contains the add button(and possibly in future versions, additional controls).  This can be templated as a child of .multiform-template with an id of *{{prefix}}_{{iteration}}-multiform_controls*.
+* **Remove** button can be customized as a child of .multiform-template with the id of *remove-button*.  If a remove button container is templated the remove button template should be a child of it.
+* **Remove button container** is an optional container for the remove button.  If not templated, it won't be created.  To template it simply create an element with the class *remove-container* as a child of .multiform-template.
 
-This is demo'd in [demo3.html](demo3.html).
+### Compatibility
 
-### Compatability
-
-The following are based off of the compatability documented on Mozilla Developer Network for methods and properties used in the code and are not tested.
-
-* Chrome: 29+
-* Edge: 20+ (EdgeHTML 12.10240)
-* Firefox: 23+
-* Internet Explorer: yes
-* Opera: yes
-* Safari: 6+
+Currently needs to be tested.
 
 ### Licensing
 
@@ -127,5 +115,4 @@ The following are based off of the compatability documented on Mozilla Developer
 
 ### Todo
 
-* Add functionality to provide a list of elements to be prepopulated on the form creation(for update forms).
 * Test and improve browser support.
