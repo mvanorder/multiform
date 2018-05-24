@@ -252,7 +252,7 @@ module.exports = function(grunt) {
       'replace:readme',
       'rename:rename_src',
       'rename:rename_compiled',
-      //'clean:temp'
+      'clean:temp'
     ]
   );
 
