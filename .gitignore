@@ -42,5 +42,4 @@ _SpecRunner.html
 !fab-toolbar-demo.html
 
 # Ignore compiled files
-css/ghpages-materialize.css
 bin/

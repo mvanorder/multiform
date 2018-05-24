@@ -1,15 +1,3 @@
-/*
- *
- * MultiForm 0.3 - Replicate a set of fields in a form for a one-to-many form.
- * Version 0.3b
- * @requires jQuery v1.4.3
- *
- * Copyright (c) 2017 Malcolm VanOrder
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/mit-license.php
- *
- */
-
 var FORM_ELEMENTS = ["DATALIST", "INPUT", "OPTGROUP", "SELECT", "TEXTAREA"];
 
 /**
