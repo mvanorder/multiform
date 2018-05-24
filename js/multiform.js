@@ -196,7 +196,6 @@ class Template {
       removeButtonContainer = this.removeButtonContainer.cloneNode(true);
       instanceContainer.appendChild(removeButtonContainer);
       removeButtonContainer.appendChild(removeButton);
-      console.log(removeButtonContainer);
     } else {
       instanceContainer.appendChild(removeButton);
     }
@@ -338,14 +337,14 @@ class multiFormInstance{
       this.removeButtonContainer = this.removeButtonContainerTemplate;
     } else if (this.removeButtonContainerTemplate) {
       this.removeButton = document.createElement('div');
-      this.removeButton.innerHTML = 'X';
+      this.removeButton.innerHTML = 'Remove';
       removeButtonContainerTemplate.removeChild(this.removeButtonTemplate);
     } else if (this.removeButtonTemplate) {
       this.removeButton = this.removeButtonTemplate.cloneNode(true);
       this.container.removeChild(this.removeButtonTemplate);
     } else {
       this.removeButton = document.createElement('div');
-      this.removeButton.innerHTML = 'X';
+      this.removeButton.innerHTML = 'Remove';
     }
 
     this.removeButton.classList.add(this.prefix + '-multiform_remove');
